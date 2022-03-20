@@ -144,39 +144,44 @@ class DatePicker {
     if (textColor == null)
       textColor = DateTimePickerTheme.Default.itemTextStyle.color;
 
-    var datePickerDialog = AlertDialog(
-      title: Text(
-        titleText ?? "Select Date",
-        style: TextStyle(color: textColor),
-      ),
-      contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 14),
-      backgroundColor: backgroundColor,
-      content: Directionality(
-        textDirection: locale == DateTimePickerLocale.ar
-            ? TextDirection.rtl
-            : TextDirection.ltr,
-        child: Container(
-          width: 300,
-          child: DatePickerWidget(
-            firstDate: firstDate,
-            lastDate: lastDate,
-            initialDate: initialDate,
-            dateFormat: dateFormat,
-            locale: locale,
-            pickerTheme: DateTimePickerTheme(
-              backgroundColor: backgroundColor,
-              itemTextStyle: itemTextStyle ?? TextStyle(color: textColor),
+    var datePickerDialog = Directionality(
+      textDirection: locale == DateTimePickerLocale.ar
+          ? TextDirection.rtl
+          : TextDirection.ltr,
+      child: AlertDialog(
+        title: Text(
+          titleText ?? "Select Date",
+          style: TextStyle(color: textColor),
+        ),
+        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 14),
+        backgroundColor: backgroundColor,
+        content: Directionality(
+          textDirection: locale == DateTimePickerLocale.ar
+              ? TextDirection.rtl
+              : TextDirection.ltr,
+          child: Container(
+            width: 300,
+            child: DatePickerWidget(
+              firstDate: firstDate,
+              lastDate: lastDate,
+              initialDate: initialDate,
+              dateFormat: dateFormat,
+              locale: locale,
+              pickerTheme: DateTimePickerTheme(
+                backgroundColor: backgroundColor,
+                itemTextStyle: itemTextStyle ?? TextStyle(color: textColor),
+              ),
+              onChange: ((DateTime date, list) {
+                print(date);
+                _selectedDate = date;
+              }),
+              looping: looping,
             ),
-            onChange: ((DateTime date, list) {
-              print(date);
-              _selectedDate = date;
-            }),
-            looping: looping,
           ),
         ),
+        actions:
+            reverse ? listButtonActions.reversed.toList() : listButtonActions,
       ),
-      actions:
-          reverse ? listButtonActions.reversed.toList() : listButtonActions,
     );
     return showDialog(
         useRootNavigator: false,
