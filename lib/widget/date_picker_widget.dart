@@ -102,11 +102,16 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      //padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
-      child: GestureDetector(
-        child: Material(
-            color: Colors.transparent, child: _renderPickerView(context)),
+    return Directionality(
+      textDirection: widget.locale == DateTimePickerLocale.ar
+          ? TextDirection.rtl
+          : TextDirection.ltr,
+      child: Container(
+        //padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
+        child: GestureDetector(
+          child: Material(
+              color: Colors.transparent, child: _renderPickerView(context)),
+        ),
       ),
     );
   }
